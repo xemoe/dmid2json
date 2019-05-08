@@ -12,15 +12,6 @@ DOCKER_GO_PATH=/usr/src/myapp
 DOCKER_GO_IMAGE="my-golang-app"
 
 #
-# Docker run cmd
-#
-DOCKER_RUN= \
-	docker run -v ${ROOT_DIR}:${DOCKER_GO_PATH} \
-		-v ${ROOT_DIR}/.cache:/go \
-		-w ${DOCKER_GO_PATH}/$(DOCKER_WORKSPACE) \
-		${DOCKER_GO_IMAGE} \
-
-#
 # Dependencies
 #
 .PHONY: deps
