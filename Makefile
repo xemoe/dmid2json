@@ -2,7 +2,7 @@
 # Default target
 #
 .PHONY: all
-all: test
+all: deps test clean
 
 #
 # Variables
@@ -16,20 +16,25 @@ DOCKER_GO_IMAGE="my-golang-app"
 #
 .PHONY: deps
 deps: go-build-image
+	@echo "[x]  Prepare dependencies"
 
 #
 # Go build with docker
 #
 .PHONY: go-build-image
 go-build-image:
+	@echo "[ ]  Creating go build image..."
+	@echo
 	@docker build -t ${DOCKER_GO_IMAGE} .
+	@echo
+	@echo "[x]  Go build image has been created!"
 
 #
 # target: test
 #
 .PHONY: test
 test:
-	@echo "[ ]  Starting go get"
+	@echo "[ ]  Starting go get..."
 	@docker run -v ${ROOT_DIR}:${DOCKER_GO_PATH} \
 		--rm \
 		-v ${ROOT_DIR}/.cache:/go \
@@ -37,7 +42,7 @@ test:
 		${DOCKER_GO_IMAGE} \
 		go get
 	@echo "[x]  Done go get!"
-	@echo "[ ]  Starting go test"
+	@echo "[ ]  Starting go test..."
 	@echo
 	@docker run -v ${ROOT_DIR}:${DOCKER_GO_PATH} \
 		--rm \
