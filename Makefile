@@ -32,8 +32,8 @@ go-build-image:
 #
 # target: test
 #
-.PHONY: test
-test:
+.PHONY: go-get
+go-get:
 	@echo "[ ]  Starting go get..."
 	@docker run -v ${ROOT_DIR}:${DOCKER_GO_PATH} \
 		--rm \
@@ -42,6 +42,24 @@ test:
 		${DOCKER_GO_IMAGE} \
 		go get
 	@echo "[x]  Done go get!"
+
+.PHONY: test
+test: go-get
+	@echo "[ ]  Starting go test..."
+	@echo
+	@docker run -v ${ROOT_DIR}:${DOCKER_GO_PATH} \
+		--rm \
+		--device /dev/mem:/dev/mem \
+		--cap-add SYS_RAWIO \
+		-v ${ROOT_DIR}/.cache:/go \
+		-w ${DOCKER_GO_PATH} \
+		${DOCKER_GO_IMAGE} \
+		go test ./dmid ./parser
+	@echo
+	@echo "[x]  Done go test!"
+
+.PHONY: test-verbose
+test-verbose: go-get
 	@echo "[ ]  Starting go test..."
 	@echo
 	@docker run -v ${ROOT_DIR}:${DOCKER_GO_PATH} \
