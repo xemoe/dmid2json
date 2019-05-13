@@ -37,7 +37,6 @@ go-get:
 	@echo "[ ]  Starting go get..."
 	@docker run -v ${ROOT_DIR}:${DOCKER_GO_PATH} \
 		--rm \
-		-v ${ROOT_DIR}/.cache:/go \
 		-w ${DOCKER_GO_PATH} \
 		${DOCKER_GO_IMAGE} \
 		go get
@@ -51,7 +50,6 @@ test: go-get
 		--rm \
 		--device /dev/mem:/dev/mem \
 		--cap-add SYS_RAWIO \
-		-v ${ROOT_DIR}/.cache:/go \
 		-w ${DOCKER_GO_PATH} \
 		${DOCKER_GO_IMAGE} \
 		go test ./dmid ./parser
@@ -66,7 +64,6 @@ test-verbose: go-get
 		--rm \
 		--device /dev/mem:/dev/mem \
 		--cap-add SYS_RAWIO \
-		-v ${ROOT_DIR}/.cache:/go \
 		-w ${DOCKER_GO_PATH} \
 		${DOCKER_GO_IMAGE} \
 		go test -v ./dmid ./parser
