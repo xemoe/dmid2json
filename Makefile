@@ -9,7 +9,7 @@ all: deps test clean
 #
 ROOT_DIR=${PWD}
 DOCKER_GO_PATH=/usr/src/myapp
-DOCKER_GO_IMAGE="my-golang-app"
+DOCKER_GO_IMAGE="my-golang-serial"
 
 #
 # Functions
